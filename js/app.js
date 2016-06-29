@@ -224,16 +224,16 @@ TestOrientation = function() {
 };
 
 deviceOrientationListener = function(event) {
-  var horizontalSlide, verticalSlide;
-  horizontalSlide = Math.round(event.beta);
+  var verticalSlide;
   verticalSlide = Math.round(event.gamma);
   return world.SetGravity(new b2Vec2(verticalSlide * 0.2, -10));
 };
 
-if (window.DeviceOrientationEvent) {
-  window.addEventListener('deviceorientation', deviceOrientationListener);
-}
-
 document.addEventListener("DOMContentLoaded", function() {
-  return initTestbed();
+  if (window.DeviceOrientationEvent) {
+    initTestbed();
+    return window.addEventListener('deviceorientation', deviceOrientationListener);
+  } else {
+    return alert("Your browser does not support the DeviceOrientation API.");
+  }
 });

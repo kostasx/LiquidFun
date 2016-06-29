@@ -196,13 +196,15 @@ TestOrientation = ->
   particleSystem.CreateParticleGroup pgd
 
 deviceOrientationListener = (event) ->
-  horizontalSlide = Math.round(event.beta)  # Backwards +, Forward -
   verticalSlide   = Math.round(event.gamma) # Right +, Left -
   world.SetGravity new b2Vec2( verticalSlide * 0.2, -10 )
 
-if window.DeviceOrientationEvent
-  window.addEventListener 'deviceorientation', deviceOrientationListener
+document.addEventListener( "DOMContentLoaded", ()-> 
 
-document.addEventListener( "DOMContentLoaded", ()->
-  initTestbed()
+  if window.DeviceOrientationEvent
+    initTestbed() 
+    window.addEventListener 'deviceorientation', deviceOrientationListener
+  else
+    alert "Your browser does not support the DeviceOrientation API."
+
 )
